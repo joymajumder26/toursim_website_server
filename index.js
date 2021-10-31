@@ -61,7 +61,7 @@ async function run() {
             const result = await servicesCollection.insertOne(service);
             console.log(result);
             res.json(result);
-        })
+        });
 
         //POST order API-----------------------------post order
         app.post('/order', async (req, res) => {
@@ -71,38 +71,23 @@ async function run() {
             const result = await orderCollection.insertOne(orders);
             console.log(result);
             res.json(result)
-        })
+        });
         //GET ORDER API---------------------------get order
         app.get('/order', async (req, res) => {
             const cursor = orderCollection.find({});
             const orders = await cursor.toArray();
             res.send(orders);
 
-        })
-        //UPDATE API
-        app.put('/places/:id', async (req, res) => {
-            const id = req.params.id;
-            const updatedUser = req.body;
-            const filter = { _id: ObjectId(id) };
-            const options = { upsert: true };
-            const updateDoc = {
-                $set: {
-                    name: updatedUser.name,
-                    email: updatedUser.email
-                },
-            };
-            const result = await usersCollection.updateOne(filter, updateDoc, options)
-            console.log('updating', id)
-            res.json(result)
-        })
+        });
+        
         // delete api
         app.delete('/places/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await servicesCollection.deleteOne(query);
             res.json(result);
-        })
-// delete api my order
+        });
+        // delete api my order
         app.delete('/order/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
